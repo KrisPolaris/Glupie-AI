@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systematyczne AI - No API</title>
+    <style>
+        body {
+            background: #050505;
+            color: #00ffcc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 20px;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px #00ffcc;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        #chat-window {
+            flex: 1;
+            width: 90%;
+            max-width: 600px;
+            background: #111;
+            border: 2px solid #00ffcc;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 15px #000, 0 0 20px rgba(0, 255, 204, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .user-msg {
+            background: #003322;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            border-right: 4px solid #00ffcc;
+        }
+
+        .ai-msg {
+            background: #222;
+            color: #00ffcc;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border-left: 4px solid #00ffcc;
+        }
+
+        #input-area {
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            padding-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            background: #111;
+            border: 1px solid #00ffcc;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        button {
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 0 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #fff;
+            box-shadow: 0 0 20px #00ffcc;
+            transform: scale(1.05);
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        /* Scrollbar Style */
+        #chat-window::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat-window::-webkit-scrollbar-thumb {
+            background: #00ffcc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>systematyczne ai co zastąpi ludzi</header>
+
+<div id="chat-window">
+    <div class="msg ai-msg">siema (czego chcesz)</div>
+</div>
+
+<div id="input-area">
+    <input type="text" id="userInput" placeholder="Napisz do AI..." autocomplete="off">
+    <button onclick="sendMessage()">WYŚLIJ</button>
+</div>
+
+<script>
+const botDatabase = {
+    "siema": ["No siema!", "siemanko!", "Siema, co tam u Ciebie?"],
+    "hej": ["Hejka!", "Cześć!", "Siemanko"],
+    "los": ["lece przez okno skir skir skir", "co robi szkielet na plaży? bawi sie łopatką", "used to shop at aldis"],
+    "napisz": ["a po co xDDDD", "XD co napisać mam 5 iq", "NO JA JESTEM ZA GŁUPI NA TO"],
+    "udawaj": ["robią to tylko głupcy jak ja", "CHŁOPIE CZEMU SAM TO ZRÓB!!!!!"],
+    "klepuszka": ["Zaraz ci urośnie bebzun jak KLEPUSKA"],
+    "aha": ["aha takie wielkie jak twój pp", "insert take the l emoji here"],
+    "bebzun": [
+        "ale bebzun", 
+        "THIS IS THE END OF BRZUSZEK", 
+        "bebun idzie do domu", 
+        "ale bebzun <br> <img src='Bebuch.png' alt='Bebuch'>"
+    ],
+    "co robisz": ["a ja se patrze co robisz", "hakuje ciebie pamiętaj fice twice thrice i fourice", "Siedzę w kodzie. (kto sie pytał)"],
+    "kolan": [
+        "napiłeś sie piwoooo janka do briałego ranka piwo janka do białego ranka kiedy pusta szklanka nalej piwo janka nalej nalej nalej potem nalej drugi raz no", 
+        "Witamy w schowku Gboard. Tu będzie przechowywany każdy tekst, który skopiujesz.", 
+        "o"
+    ],
+    "karkonosz": [
+        "napiłeś sie piwoooo janka do briałego ranka piwo janka do białego ranka kiedy pusta szklanka nalej piwo janka nalej nalej nalej potem nalej drugi raz no", 
+        "Witamy w schowku Gboard. Tu będzie przechowywany każdy tekst, który skopiujesz.", 
+        "o"
+    ],
+    "wha": ["no i bebzun", "idk", "też nie wiem"],
+    "zdenerwuj": [
+        "czy ty jesz zupe widelcem??", 
+        "ja chociaż jestem w serwerowni a ty w czarnej dupie", 
+        "Chyba se jaja robisz 🥚🥚🥚 🐵 marco wzięła papierosa i spaliła nosa . Opowiem ci bajkę jak kot palił fajkę a kocica papierosa spaliła se kawał nosa😩😩😩 tutututututututututut.🤣"
+    ],
+    "powiedz gacie": ["twój stary jest w polsacie"],
+    "eli5": ["Zamieniam ciebie w 5latka i dopiero ci wytłumacze", "Najpierw dorośnij do 5 lat, potem pytaj xd"],
+    "kocham": ["Nje wiem co ty za bebzuna kochasz ale go trzasne z ak47"],
+    "default": [
+        "o co chodzi ty oce w axa oce w axa oce w axa pan też ćwiczy", 
+        "wyślij to krystianowi (mi) żebym dodał to słowo do serweryzacji", 
+        "System nie rozumie tej komendy. (a ja mam to w dupie)"
+    ]
+};
+
+const chatWindow = document.getElementById("chat-window");
+const inputField = document.getElementById("userInput");
+
+function sendMessage() {
+    const rawText = inputField.value.trim();
+    if (rawText === "") return;
+
+    const lowerText = rawText.toLowerCase();
+
+    addMessage(rawText, "user-msg");
+    inputField.value = "";
+
+    setTimeout(() => {
+        let response = findResponse(lowerText);
+        addMessage(response, "ai-msg");
+    }, 400);
+}
+
+function findResponse(userInput) {
+    for (let key in botDatabase) {
+        if (userInput.includes(key) && key !== "default") {
+            const options = botDatabase[key];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+    }
+    const defaults = botDatabase["default"];
+    return defaults[Math.floor(Math.random() * defaults.length)];
+}
+
+function addMessage(text, className) {
+    const div = document.createElement("div");
+    div.className = "msg " + className;
+    div.innerHTML = text;
+    chatWindow.appendChild(div);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+inputField.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+});
+</script>
+
+</body>
+</html>
