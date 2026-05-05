@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Systematyczne AI - No API</title>
+    <title>Systematyczne AI</title>
     <style>
         body {
             background: #050505;
@@ -109,6 +109,17 @@
             margin-top: 10px;
         }
 
+        /* Styl dla bloku kodu bota */
+        pre {
+            background: #000;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
         /* Scrollbar Style */
         #chat-window::-webkit-scrollbar {
             width: 6px;
@@ -136,11 +147,34 @@
 const botDatabase = {
     "siema": ["No siema!", "siemanko!", "Siema, co tam u Ciebie?"],
     "hej": ["Hejka!", "Cześć!", "Siemanko"],
+    "przestań": ["a jeśli nie?", "a co jeśli nie"],
     "los": ["lece przez okno skir skir skir", "co robi szkielet na plaży? bawi sie łopatką", "used to shop at aldis"],
     "napisz": ["a po co xDDDD", "XD co napisać mam 5 iq", "NO JA JESTEM ZA GŁUPI NA TO"],
     "udawaj": ["robią to tylko głupcy jak ja", "CHŁOPIE CZEMU SAM TO ZRÓB!!!!!"],
     "klepuszka": ["Zaraz ci urośnie bebzun jak KLEPUSKA"],
-    "aha": ["aha takie wielkie jak twój pp", "insert take the l emoji here"],
+    "aha": ["ahahahahahaha", "takie jaja"],
+    "pipi": ["CZY ONA SKRZYPI?", "tylko nie gadaj o byku <br> bykowiastym byku"],
+    "byk": ["AAAAAAAA LECE BO BYK <br> PRZEZ OKNO MNIE <br> WYWALIŁ :(((", "ty bebzunie byczku", "sierra leone"],
+    "babus": ["bez uska!", "bez paluska", "WhatsApp WhatsApp whatsappowy jest WhatsApp WhatsApp piszę malutki WhatsApp i jest cały w gif-ach"],
+    "tłumacz": ["sam wejdź w tłumacz google"],
+    "dijareja": ["kanapoćna?", "atak <h1>Kanapoćnej</h1>"],
+    "zaprogramuj": [`okej masz <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="pl"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;title&gt;HTML Tagi – hej&lt;/title&gt;
+&lt;style&gt;
+    body { font-family: Arial; background: #111; color: #eee; }
+    h1 { color: #00ccff; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Witaj na stronie – hej 👋&lt;/h1&gt;
+    &lt;p&gt;To jest paragraf – hej&lt;/p&gt;
+    &lt;footer&gt;Stopka – hej 🚀&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>`],
     "bebzun": [
         "ale bebzun", 
         "THIS IS THE END OF BRZUSZEK", 
